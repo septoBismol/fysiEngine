@@ -56,19 +56,7 @@ bool program::init(){
     success = true;
     return success;
 }
-void program::run(){
-    init();
-    SDL_Texture* texture = loadTexture("resources/pandabear.png", renderer);
-    if (texture == NULL) {
-        printf("Failed to load texture image!\n");
-        return;
-    }
-    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-    if (SDL_SetTextureAlphaMod(texture, 128) == 0){
-        printf("%s\n",SDL_GetError());
-    }
-    
-    
+void program::windowLoop(){
     SDL_Event e; 
     bool quit = false; 
     while( quit == false ){ 
@@ -85,6 +73,21 @@ void program::run(){
         } 
         
     }
+}
+void program::run(){
+    init();
+    texture = loadTexture("resources/pandabear.png", renderer);
+    if (texture == NULL) {
+        printf("Failed to load texture image!\n");
+        return;
+    }
+    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+    if (SDL_SetTextureAlphaMod(texture, 128) == 0){
+        printf("%s\n",SDL_GetError());
+    }
+    
+    windowLoop();
+    
       //Destroy window
     SDL_DestroyWindow( window );
 

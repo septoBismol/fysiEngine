@@ -8,6 +8,8 @@ public:
     program(); // Constructor
     void run();
 private:
+    SDL_Texture* texture; // this is the background
+    void windowLoop();
     bool init();
     SDL_Window* window = NULL;
     SDL_Surface* screenSurface = NULL;
