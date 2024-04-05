@@ -4,3 +4,4 @@ fysiEngine is a 2d physics engine made by septic.
 - Lua embedding (soon)
 - 2D Rigidbodies and Physics
 - World Editor
+- (possibly) ragdolls
