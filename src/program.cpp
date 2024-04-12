@@ -2,7 +2,8 @@
 #include "../include/constants.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
-program::program() {
+program::program(){
+    
 }
 SDL_Texture* program::loadTexture(const char* path, SDL_Renderer* renderer){
     // Load image at specified path
@@ -45,7 +46,7 @@ bool program::init(){
                 printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
                 return success;
             }
-            
+            SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
             int imgFlags = IMG_INIT_PNG;
             if (!(IMG_Init(imgFlags) & imgFlags)) {
                 printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
@@ -56,6 +57,18 @@ bool program::init(){
     success = true;
     return success;
 }
+void program::render(){
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+    SDL_SetRenderDrawColor( renderer, 0x0, 0xFF, 0x0, 0xFF );
+    SDL_RenderDrawRect(renderer, &rectangle.rect);
+    SDL_RenderDrawLine(renderer, floor(rectangle.x+rectangle.width/2), floor(rectangle.y+rectangle.height/2), floor(rectangle.x+rectangle.width/2)+ceil(sin(degreesToRadians(rectangle.dir)) * rectangle.width), floor(rectangle.y+rectangle.height/2)+ceil(cos(degreesToRadians(rectangle.dir)) * rectangle.height));
+    SDL_SetRenderDrawColor( renderer, 0x80, 0x80, 0x80, 0xFF );
+    SDL_RenderPresent(renderer);
+}
+void program::physics(){
+    rectangle.stepMovement();
+}
 void program::windowLoop(){
     SDL_Event e; 
     bool quit = false; 
@@ -64,18 +77,13 @@ void program::windowLoop(){
             if( e.type == SDL_QUIT ){
                 quit = true; 
             } 
-            SDL_RenderClear(renderer);
-            SDL_SetRenderDrawColor( renderer, 0x80, 0x80, 0x80, 0xFF );
-            SDL_RenderCopy(renderer, texture, NULL, NULL);
-            SDL_RenderPresent(renderer);
-
-            
         } 
-        
+        physics();
+        render();  
+        SDL_Delay(33); 
     }
 }
-void program::run(){
-    init();
+void program::initObjects(){
     texture = loadTexture("resources/pandabear.png", renderer);
     if (texture == NULL) {
         printf("Failed to load texture image!\n");
@@ -86,6 +94,11 @@ void program::run(){
         printf("%s\n",SDL_GetError());
     }
     
+}
+
+void program::run(){
+    init();
+    initObjects();
     windowLoop();
     
       //Destroy window

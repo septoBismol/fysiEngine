@@ -5,8 +5,9 @@
 class circle : public object{
 public:
     bool checkCollision(circle colObj);
-    bool checkCollisionRect(axisrectangle colObj);
     float radius;
+    float dir;
+    float vel;
 private:
     SDL_Rect* rect;
 };
