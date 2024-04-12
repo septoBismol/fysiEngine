@@ -12,8 +12,6 @@ public:
     int width;
     int height;
     SDL_Rect rect;
-    float dir;
-    float vel;
 private:
     
 };

@@ -26,8 +26,8 @@ void axisrectangle::reposition(int x, int y){
     this->y = y;
 }
 void axisrectangle::stepMovement(){
-    float base = ceil(sin(degreesToRadians(dir)) * vel);
-    float height = ceil(cos(degreesToRadians(dir)) * vel);
+    float base = floor(sin(degreesToRadians(dir)) * vel);
+    float height = floor(cos(degreesToRadians(dir)) * vel);
     this->x += base;
     this->y += height;
     this->rect.x = this->x;

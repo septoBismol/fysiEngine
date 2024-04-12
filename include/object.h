@@ -5,5 +5,8 @@ class object {
 public:
     int x;
     int y;
+    float mass;
+    float dir;
+    float vel;
 };
 #endif

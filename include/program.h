@@ -15,7 +15,7 @@ private:
     void initObjects();
     void physics();
     void render();
-    axisrectangle rectangle = axisrectangle(100,100,45,5);
+    axisrectangle rectangle = axisrectangle(100,100,90,5); // initialize the box. X, Y, DIRECTION, VELOCITY
     SDL_Window* window = NULL;
     SDL_Surface* screenSurface = NULL;
     SDL_Renderer* renderer = NULL;
